@@ -1,6 +1,9 @@
 package com.github.zikl00.adventura.logika;
 
 import java.util.*;
+import java.util.Observable;
+//import com.github.zikl00.adventura.ui.observerVychody;
+import com.github.zikl00.adventura.logika.*;
 /**
  *  Class HerniPlan - třída představující mapu a stav adventury.
  * 
@@ -12,7 +15,7 @@ import java.util.*;
  *@author     Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Libor Zíka
  *@version    pro školní rok 2015/2016
  */
-public class HerniPlan {
+public class HerniPlan extends Observable{
     
     private Prostor aktualniProstor;
     private Hrdinka hrdinka;
@@ -572,6 +575,13 @@ public class HerniPlan {
         return aktualniProstor;
     }
     
+    /*
+    //pokus zatim
+    @Override
+    public void aktualizuj(Collection<Prostor> prostor){
+ 	   hra.getHerniPlan().getAktualniProstor().getVychody();
+    }*/
+    
     /**
      *  Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory
      *
@@ -579,7 +589,9 @@ public class HerniPlan {
      */
     public void setAktualniProstor(Prostor prostor) {
        aktualniProstor = prostor;
-    }
+       this.setChanged();
+       this.notifyObservers();
+    };
     
     /**
      * Getter na proměnnou naslaBratra.

@@ -138,6 +138,11 @@ public class Postava
     public String getKecy(){
         return kecy;
     }
+    
+    @Override
+    public String toString() {
+    	return getNazev();
+    }
     //== Soukromé metody (instancí i třídy) ========================================
 
 }

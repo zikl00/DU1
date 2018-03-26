@@ -1,4 +1,4 @@
-package com.github.zikl00.adventura.uiText;
+package com.github.zikl00.adventura.ui;
 
 import java.util.Scanner;
 //importy na streamy
@@ -43,6 +43,7 @@ public class TextoveRozhrani {
         System.out.println(hra.vratEpilog());
     }
 
+    //metoda pro hru ze souboru - nepoužívá se stejně
     public void hrajZeSouboru(String nazevSouboru) {
         System.out.println(hra.vratUvitani());
         try (BufferedReader ctecka = new BufferedReader (new FileReader(nazevSouboru))){

@@ -32,7 +32,7 @@ class PrikazInventar implements IPrikaz {
         if(parametry.length == 0){
             return hra.getHerniPlan().getHrdinka().popisInventar() + "\n" + hra.getHerniPlan().getHrdinka().ukazEQ();
         }else{
-            return "Příkaz souboj je bez parametru.";
+            return "Příkaz inventář je bez parametru.";
         }
     }
     

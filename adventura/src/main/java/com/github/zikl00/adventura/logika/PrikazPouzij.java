@@ -2,6 +2,7 @@
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package com.github.zikl00.adventura.logika;
 import java.util.*;
+import java.util.Observable;
 
 /**
  *  Třída PrikazPouzij implementuje pro hru příkaz pouzij.
@@ -10,7 +11,7 @@ import java.util.*;
  *@author     Libor Zíka
  *@version    1.01
  */
-public class PrikazPouzij implements IPrikaz
+public class PrikazPouzij extends Observable implements IPrikaz
 {
     //== Datové atributy (statické i instancí)======================================
     private static final String NAZEV = "použij";
@@ -44,9 +45,15 @@ public class PrikazPouzij implements IPrikaz
             return "To v inventáři nemáš.";
         }//kdyz jeste nic nema
         else{
-            hra.getHerniPlan().getHrdinka().pouzijVec(pouzivana);
-            if(pouzivana.vratUtocneCislo() > 0){return "teď bojuješ s: " + pouzivana.getNazev();}
-            else{return "";}
+        	String vratRetezec = hra.getHerniPlan().getHrdinka().pouzijVec(pouzivana);
+            if(pouzivana.vratUtocneCislo() > 0){
+            	this.setChanged();
+            	this.notifyObservers();
+            	return "teď bojuješ s: " + pouzivana.getNazev();}
+            else{
+            	this.setChanged();
+            	this.notifyObservers();
+            	return vratRetezec;}
         }
     }   
     

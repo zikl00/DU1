@@ -62,7 +62,11 @@ public class Vec
     public int vratUtocneCislo(){
         return utocneCislo;
     }
-
+    
+    @Override
+    public String toString() {
+    	return getNazev();
+    }
     //== Soukromé metody (instancí i třídy) ========================================
 
 }

@@ -119,21 +119,25 @@ public class Hrdinka
      * 
      * @param Vec neco Představuje odkaz na věc používanou Z INVENTARE (pouze).
      */
-    public void pouzijVec(Vec neco){//je to zbytecne slozite, mozna to pak predelam, ale asi ne, kdyz to funguje... :D
+    public String pouzijVec(Vec neco){//je to zbytecne slozite, mozna to pak predelam, ale asi ne, kdyz to funguje... :D
         //if(inventar.containsValue(neco)){//takova mala paranoia :D, nemusim protoze je to v prikazu pouzij
-        if(neco.vratUtocneCislo() < 0){//potion - zaporne cislo utocne
+    	String retezecVrat = "";
+    	if(neco.vratUtocneCislo() < 0){//potion - zaporne cislo utocne
             if(zivoty == maxZivoty){
-                System.out.print("Životy netřeba doplňovat.");
+                //System.out.print("Životy netřeba doplňovat.");
+                retezecVrat += "Životy netřeba doplňovat.";
                 vlozVec(neco);
             }else{
                 zivoty -= neco.vratUtocneCislo();
                 if(zivoty > maxZivoty){ zivoty = maxZivoty;}
-                System.out.print("Doplinila jsi si životy: " + ukazZivoty());
+                //System.out.print("Doplinila jsi si životy: " + ukazZivoty());
+                retezecVrat += "Doplinila jsi si životy: " + ukazZivoty();
                 //jeste odeber potion
                 odeberVec(neco.getNazev());
             }
         }else if(neco.vratUtocneCislo() == 0){
-            System.out.print("Klíč se použije automaticky při vchodu do prostoru.");
+            //System.out.print("Klíč se použije automaticky při vchodu do prostoru.");
+            retezecVrat += "Klíč se použije automaticky při vchodu do prostoru.";
         }else if(equipped.isEmpty()){//kdyz neni nic equipnuteho
             equipped.put(neco.getNazev(),neco);
             utocneCislo += neco.vratUtocneCislo();
@@ -149,6 +153,7 @@ public class Hrdinka
             utocneCislo += neco.vratUtocneCislo();
             inventar.remove(neco);
         }
+    	return retezecVrat;
     }
     
     /**

@@ -101,7 +101,7 @@ public class Hra implements IHra {
      *  Nastaví, že je konec hry, metodu využívá třída PrikazKonec,
      *  mohou ji použít i další implementace rozhraní Prikaz.
      *  
-     *  @param  konecHry  hodnota false= konec hry, true = hra pokračuje
+     *  @param  konecHry hodnota false = konec hry, true = hra pokračuje
      */
     void setKonecHry(boolean konecHry) {
         this.konecHry = konecHry;

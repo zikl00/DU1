@@ -1,6 +1,7 @@
 package com.github.zikl00.adventura.logika;
 import java.util.*;
-import java.io.*; 
+import java.io.*;
+import java.util.Observable;
 /**
  *  Třída PrikazSouboj implementuje pro hru příkaz jdi.
  *  Tato třída je součástí jednoduché textové hry.
@@ -8,7 +9,7 @@ import java.io.*;
  *@author     Libor Zíka
  *@version    1.01
  */
-class PrikazSouboj implements IPrikaz {
+class PrikazSouboj extends Observable implements IPrikaz {
     private static final String NAZEV = "souboj";
     private Hra hra;
     
@@ -49,11 +50,11 @@ class PrikazSouboj implements IPrikaz {
         System.out.println("Souboj začal:");
         int utokHrdinka, utokPostava;
         while(hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty()>0){
-               try {
+               /*try {
                    Thread.sleep(1250);//1000 milliseconds is one second.
                } catch(InterruptedException ex) {
                    Thread.currentThread().interrupt();
-               }
+               }*/
                utokHrdinka = hra.getHerniPlan().randInt(6) + hra.getHerniPlan().randInt(6) + hra.getHerniPlan().getHrdinka().ukazUtocneCislo();
                utokPostava = hra.getHerniPlan().randInt(6) + hra.getHerniPlan().randInt(6) + hra.getHerniPlan().getAktualniProstor().getPostava().getUtocneCislo();
                if(utokHrdinka > utokPostava){
@@ -104,8 +105,12 @@ class PrikazSouboj implements IPrikaz {
             }
             vracenyText = vracenyText.substring(0, vracenyText.length()-2);
             System.out.print(vracenyText);
+            this.setChanged();
+            this.notifyObservers();
         }
         hra.getHerniPlan().getAktualniProstor().odeberPostavu();
+        this.setChanged();
+        this.notifyObservers();
         if(hra.getHerniPlan().getAktualniProstor().getNazev().equalsIgnoreCase("kouzelníkova_komnata")){
             hra.getHerniPlan().setOsvobodilaBratra();
             return "Blahopřeji, úspěšně se ti podařilo porazit zlého kouzelníka a osvobodit svého bratra.\n" + 

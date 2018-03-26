@@ -1,5 +1,6 @@
 package com.github.zikl00.adventura.logika;
 
+
 /**
  *  Třída PrikazJdi implementuje pro hru příkaz jdi.
  *  Tato třída je součástí jednoduché textové hry.
@@ -32,6 +33,7 @@ public class PrikazJdi implements IPrikaz {
      */ 
     @Override
     public String proved(String... parametry) {
+    	String vratRetezec = "";
         if (parametry.length == 0) {
             // pokud chybí druhé slovo (sousední prostor), tak ....
             return "Zadej název oblasti kam chceš jít";
@@ -45,21 +47,22 @@ public class PrikazJdi implements IPrikaz {
         else {
             if(hra.getHerniPlan().getAktualniProstor().getPostava() != null && !(hra.getHerniPlan().getAktualniProstor().pratelskaPostava())){
                 hra.getHerniPlan().getHrdinka().seberZivoty(2);
-                System.out.println(hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě praštil za 2 životy, protože jsi se otočila zády.");
+                //System.out.println(hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě praštil za 2 životy, protože jsi se otočila zády.");
+                vratRetezec = hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě praštil za 2 životy, protože jsi se otočila zády.";
                 if( hra.getHerniPlan().getHrdinka().vratZivotyCislo() < 1){
-                       System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
-                       return "";
+                       return "\nUmřela jsi a tvé dobrodružství zde končí...";
                    }
             }
             if(sousedniProstor.jePotrebaKlic()){
                 if (hra.getHerniPlan().getHrdinka().vratInventar().containsKey(sousedniProstor.getKlic())){
-                    System.out.println("Máš správný klíč a můžeš vejít.");
+                    //System.out.println("Máš správný klíč a můžeš vejít.");
+                	vratRetezec = "Máš správný klíč a můžeš vejít.";
                 }else{
                     return "Nemáš klíč.";
                 }
             }
             hra.getHerniPlan().setAktualniProstor(sousedniProstor);
-            return "\n" + sousedniProstor.dlouhyPopis();
+            return "\n" + vratRetezec + "\n" + sousedniProstor.dlouhyPopis();
         }
     }
     

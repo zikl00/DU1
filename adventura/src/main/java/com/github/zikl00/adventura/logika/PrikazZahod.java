@@ -2,6 +2,7 @@
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package com.github.zikl00.adventura.logika;
 import java.util.*;
+import java.util.Observable;
 
 /**
  *  Třída PrikazZahod implementuje pro hru příkaz zahod.
@@ -10,7 +11,7 @@ import java.util.*;
  * @author    Libor Zíka
  * @version   1.01
  */
-public class PrikazZahod implements IPrikaz
+public class PrikazZahod extends Observable implements IPrikaz
 {
     //== Datové atributy (statické i instancí)======================================
     private static final String NAZEV = "zahoď";
@@ -45,6 +46,8 @@ public class PrikazZahod implements IPrikaz
         Vec equipnuta = hra.getHerniPlan().getHrdinka().odeberEquip(nazevZahozeneVeci);
         if(equipnuta != null){
             aktualni.vlozVec(equipnuta);
+            this.setChanged();
+            this.notifyObservers();
             return "z ruky jsi zahodila: " + equipnuta.getNazev();
         }
         if(zahozena == null){
@@ -52,6 +55,8 @@ public class PrikazZahod implements IPrikaz
         }
         else{
              aktualni.vlozVec(zahozena);
+             this.setChanged();
+             this.notifyObservers();
              return "zahodila jsi: " + zahozena.getNazev();
         }
     } 

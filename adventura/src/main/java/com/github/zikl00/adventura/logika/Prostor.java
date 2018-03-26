@@ -317,4 +317,9 @@ public class Prostor {
             return true;
         }
     }
+    
+    @Override
+    public String toString() {
+    	return getNazev();
+    }
 }
