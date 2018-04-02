@@ -1,5 +1,7 @@
 package com.github.zikl00.adventura.logika;
 
+import javafx.beans.Observable;
+
 /**
  *  Třída implementující toto rozhraní bude ve hře zpracovávat jeden konkrétní příkaz.
  *  Toto rozhraní je součástí jednoduché textové hry.

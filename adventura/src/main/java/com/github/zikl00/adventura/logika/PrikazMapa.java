@@ -67,7 +67,7 @@ public class PrikazMapa implements IPrikaz
      */
     	private String vypisMapa(Prostor praRodic, Prostor rodic, int level, int[] indexy){
         String mezery_1 = "      ";
-        String mezery_2 = "|     ";
+        String mezery_2 = "    |     ";
         String retezecVrat = "";
         if(praRodic != null){
             rodic.getVychodyProMapu().remove(praRodic.getNazev());
@@ -93,7 +93,7 @@ public class PrikazMapa implements IPrikaz
                     }                    
                 }
                 //System.out.println("\\--- " + potomek.getNazev());
-                retezecVrat += "\\--- " + potomek.getNazev() + "\n";
+                retezecVrat += "    \\--- " + potomek.getNazev() + "\n";
                 //System.out.print(vypisMapa(rodic, potomek, level + 1, indexy));
                 retezecVrat += vypisMapa(rodic, potomek, level + 1, indexy);
             }

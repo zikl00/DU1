@@ -50,13 +50,13 @@ public class PrikazSeber extends Observable implements IPrikaz
         }else{
             if(hra.getHerniPlan().getAktualniProstor().getPostava() != null && !(hra.getHerniPlan().getAktualniProstor().pratelskaPostava())){
                 aktualni.vlozVec(sbirana);
-                System.out.print( hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy.");
+                //System.out.print( hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy.");
                 hra.getHerniPlan().getHrdinka().seberZivoty(2);
                 if( hra.getHerniPlan().getHrdinka().vratZivotyCislo() < 1){
-                       System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
-                       return "";
+                       //System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
+                       return hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy." + "\nUmřela jsi a tvé dobrodružství zde končí...";
                    }
-                return "";
+                return hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " tě majznul přes ruce a ubral 2 životy.";
             }
             if(sbirana.jePrenositelna()){
                hra.getHerniPlan().getHrdinka().vlozVec(sbirana);

@@ -36,7 +36,7 @@ public class HerniPlan extends Observable{
      *  Definuje postavy a předměty a jejich umístění.
      *  Jako výchozí aktuální prostor nastaví zničenou vesnici.
      */
-    private void zalozProstoryHry() {
+    public void zalozProstoryHry() {
         // vytvářejí se jednotlivé prostory
         
         Prostor znicenaVesnice = new Prostor(0, "zničená_vesnice","zničená vesnice, s rozpadlými vypálenými domky\nTaková spoušť, kdo to jen mohl udělat a proč");
@@ -492,7 +492,7 @@ public class HerniPlan extends Observable{
         tajnaMistnost.vlozVec(skrin2);
         
         //prvniCela
-        Postava carodejuvUcen = new Postava ("čarodějův učen", false, 18, 12);
+        Postava carodejuvUcen = new Postava ("čarodějův učeň", false, 18, 12);
         prvniCela.vlozPostavu(carodejuvUcen);
         Vec kbleik = new Vec ("kbelík", false, -10);
         prvniCela.vlozVec(kbleik);
@@ -575,17 +575,10 @@ public class HerniPlan extends Observable{
         return aktualniProstor;
     }
     
-    /*
-    //pokus zatim
-    @Override
-    public void aktualizuj(Collection<Prostor> prostor){
- 	   hra.getHerniPlan().getAktualniProstor().getVychody();
-    }*/
-    
     /**
      *  Metoda nastaví aktuální prostor, používá se nejčastěji při přechodu mezi prostory
      *
-     *@param  prostor nový aktuální prostor
+     * @param  prostor nový aktuální prostor
      */
     public void setAktualniProstor(Prostor prostor) {
        aktualniProstor = prostor;
@@ -608,5 +601,4 @@ public class HerniPlan extends Observable{
     public void setOsvobodilaBratra(){
         naslaBratra = true;
     }
-    
 }

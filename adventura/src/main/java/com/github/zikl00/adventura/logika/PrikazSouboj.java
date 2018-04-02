@@ -33,6 +33,7 @@ class PrikazSouboj extends Observable implements IPrikaz {
      */
     @Override
     public String proved(String... parametry) {
+    	String zprava = "";
         if(parametry.length != 0){
             return "Příkaz souboj je bez parametru.";
         }
@@ -42,12 +43,18 @@ class PrikazSouboj extends Observable implements IPrikaz {
         if(hra.getHerniPlan().getAktualniProstor().getPostava().zjistiFriend()){
             return "Nemůžeš bojovat s přátelskou postavou.";
         }
-        System.out.println("Máš " + hra.getHerniPlan().getHrdinka().ukazZivoty() + " životů a tvoje útočné číslo je: "
-            + hra.getHerniPlan().getHrdinka().ukazUtocneCislo());
-        System.out.println( hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " má " + 
-            hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty() + " životů a útočné číslo: " +
-            hra.getHerniPlan().getAktualniProstor().getPostava().getUtocneCislo() );
-        System.out.println("Souboj začal:");
+        //System.out.println("Máš " + hra.getHerniPlan().getHrdinka().ukazZivoty() + " životů a tvoje útočné číslo je: "
+        //    + hra.getHerniPlan().getHrdinka().ukazUtocneCislo());
+        zprava += "Máš " + hra.getHerniPlan().getHrdinka().ukazZivoty() + " životů a tvoje útočné číslo je: "
+                    + hra.getHerniPlan().getHrdinka().ukazUtocneCislo() + "\n";
+        //System.out.println( hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " má " + 
+        //    hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty() + " životů a útočné číslo: " +
+        //    hra.getHerniPlan().getAktualniProstor().getPostava().getUtocneCislo() );
+        zprava += hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " má " + 
+                    hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty() + " životů a útočné číslo: " +
+                    hra.getHerniPlan().getAktualniProstor().getPostava().getUtocneCislo() + "\n";
+        //System.out.println("Souboj začal:");
+        zprava += "Souboj začal:" + "\n";
         int utokHrdinka, utokPostava;
         while(hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty()>0){
                /*try {
@@ -59,22 +66,29 @@ class PrikazSouboj extends Observable implements IPrikaz {
                utokPostava = hra.getHerniPlan().randInt(6) + hra.getHerniPlan().randInt(6) + hra.getHerniPlan().getAktualniProstor().getPostava().getUtocneCislo();
                if(utokHrdinka > utokPostava){
                    hra.getHerniPlan().getAktualniProstor().getPostava().seberZivoty(2);
-                   System.out.println("Ubrala jsi protivníkovi 2 životy: "
-                   + hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " má "
-                   + hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty() + " životů");
+                   //System.out.println("Ubrala jsi protivníkovi 2 životy: "
+                   //+ hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " má "
+                   //+ hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty() + " životů");
+                   zprava += "Ubrala jsi protivníkovi 2 životy: "
+                           + hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " má "
+                           + hra.getHerniPlan().getAktualniProstor().getPostava().ukazZivoty() + " životů" + "\n";
                }else if (utokPostava > utokHrdinka){
                    hra.getHerniPlan().getHrdinka().seberZivoty(2);
-                   System.out.println("Protivník ti ubral 2 životy, máš " + hra.getHerniPlan().getHrdinka().ukazZivoty() + " životů");
+                   //System.out.println("Protivník ti ubral 2 životy, máš " + hra.getHerniPlan().getHrdinka().ukazZivoty() + " životů");
+                   zprava += "Protivník ti ubral 2 životy, máš " + hra.getHerniPlan().getHrdinka().ukazZivoty() + " životů" + "\n";
                    if( hra.getHerniPlan().getHrdinka().vratZivotyCislo() < 1){
-                       System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
-                       return "";
+                       //System.out.println("\nUmřela jsi a tvé dobrodružství zde končí...");
+                	   zprava += "\nUmřela jsi a tvé dobrodružství zde končí..." + "\n";
+                       return zprava;
                    }
                }else{
-                   System.out.println("Podařilo se ti vykrýt protivníkův úder.");
+                   //System.out.println("Podařilo se ti vykrýt protivníkův úder.");
+            	   zprava += "Podařilo se ti vykrýt protivníkův úder." + "\n";
                }
         }
-        System.out.println ("Souboj skončil úspěšně");
-        return uklidPoSouboji();
+        //System.out.println ("Souboj skončil úspěšně");
+        zprava += "Souboj skončil úspěšně\n";
+        return uklidPoSouboji(zprava);
     }
     
     /**
@@ -96,7 +110,7 @@ class PrikazSouboj extends Observable implements IPrikaz {
      * 
      * @return String řetězec.
      */
-    private String uklidPoSouboji(){
+    private String uklidPoSouboji(String zprava){
         if(hra.getHerniPlan().getAktualniProstor().getPostava().maVec()){
             String vracenyText = hra.getHerniPlan().getAktualniProstor().getPostava().getNazev() + " byl zabit a upustil loot: ";
             for(Vec predmet: hra.getHerniPlan().getAktualniProstor().getPostava().getLoot().values()){
@@ -104,7 +118,8 @@ class PrikazSouboj extends Observable implements IPrikaz {
                 hra.getHerniPlan().getAktualniProstor().vlozVec(predmet);
             }
             vracenyText = vracenyText.substring(0, vracenyText.length()-2);
-            System.out.print(vracenyText);
+            //System.out.print(vracenyText);
+            zprava += vracenyText;
             this.setChanged();
             this.notifyObservers();
         }
@@ -113,9 +128,9 @@ class PrikazSouboj extends Observable implements IPrikaz {
         this.notifyObservers();
         if(hra.getHerniPlan().getAktualniProstor().getNazev().equalsIgnoreCase("kouzelníkova_komnata")){
             hra.getHerniPlan().setOsvobodilaBratra();
-            return "Blahopřeji, úspěšně se ti podařilo porazit zlého kouzelníka a osvobodit svého bratra.\n" + 
+            zprava += "\nBlahopřeji, úspěšně se ti podařilo porazit zlého kouzelníka a osvobodit svého bratra.\n" + 
             "Děkujeme, že jste si zahráli. Hru vytvořil Libor Zíka.";
         }
-        return "";
+        return zprava;
     }
 }

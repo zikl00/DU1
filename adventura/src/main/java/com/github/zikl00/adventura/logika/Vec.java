@@ -2,6 +2,7 @@
  * Kontrola kódování: Příliš žluťoučký kůň úpěl ďábelské ódy. */
 package com.github.zikl00.adventura.logika;
 
+
 /*******************************************************************************
  * Třída Postava - popisuje postavu umístěnou v konkrétním prostoru.
  * 

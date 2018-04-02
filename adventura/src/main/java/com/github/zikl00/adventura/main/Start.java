@@ -60,7 +60,7 @@ public class Start extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-    	loader.setLocation(getClass().getResource("../ui/MainWindow.fxml"));    	
+		loader.setLocation(this.getClass().getResource("/com/github/zikl00/adventura/ui/MainWindow.fxml"));
     	Parent root = loader.load();
 
     	HomeController controller = loader.getController();
@@ -69,7 +69,8 @@ public class Start extends Application
     	
     	primaryStage.setScene(new Scene(root));
     	primaryStage.show();
-    	primaryStage.setTitle("Základní adventura");
+    	primaryStage.setTitle("Little advanced adventura");
+    	//nebude se měnit velikost okna, prostě nebude
     	primaryStage.setResizable(false);
 		
 	}

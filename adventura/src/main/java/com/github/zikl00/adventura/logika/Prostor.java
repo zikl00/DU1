@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @author Michael Kolling, Lubos Pavlicek, Jarmila Pavlickova, Libor Zíka
  * @version pro školní rok 2015/2016 LS
  */
-public class Prostor {
+public class Prostor extends Observable{
     
     private int level;  //úroveň kvůli generování
     private String nazev;
@@ -230,6 +230,8 @@ public class Prostor {
      */
     public void vlozVec(Vec neco){
         veci.put(neco.getNazev(),neco);
+        setChanged();
+        notifyObservers();
     }
     
     /**
@@ -258,6 +260,8 @@ public class Prostor {
      */
     public void odeberPostavu(){
         postava = null;
+        setChanged();
+        notifyObservers();
     }
     
     /**

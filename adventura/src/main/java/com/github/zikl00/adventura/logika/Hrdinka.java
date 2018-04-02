@@ -15,12 +15,13 @@ import java.util.*;
  * @author    Libor Zíka
  * @version   1.01
  */
-public class Hrdinka
+public class Hrdinka extends Observable
 {
     //== Datové atributy (statické i instancí)======================================
     private int zivoty;
     private int maxZivoty;
     private int utocneCislo;
+    private int utocneCisloPuvodni;
     private Hra hra;
     private Map<String, Vec> inventar;
     private Map<String, Vec> equipped;
@@ -36,6 +37,7 @@ public class Hrdinka
         zivoty = randInt(6) + randInt(6) + 12;
         maxZivoty = zivoty;
         utocneCislo = randInt(6) + 6;
+        utocneCisloPuvodni = utocneCislo;
         this.hra = hra;
         inventar = new HashMap<>();
         equipped = new HashMap<>();
@@ -69,8 +71,12 @@ public class Hrdinka
      */
     public int seberZivoty(int uber){
         zivoty -= uber;
+        setChanged();
+        notifyObservers();
         if(zivoty < 1){
             hra.setKonecHry(true);//ukoncit
+            this.setChanged();
+            this.notifyObservers();
         }
         return zivoty;
     }
@@ -84,6 +90,8 @@ public class Hrdinka
      */
     public int pridejZivoty(int pridej){
         zivoty += pridej;
+        setChanged();
+        notifyObservers();
         return zivoty;
     }
     
@@ -103,6 +111,8 @@ public class Hrdinka
      */
     public void vlozVec(Vec neco){
         inventar.put(neco.getNazev(),neco);
+        setChanged();
+        notifyObservers();
     }
     
     /**
@@ -134,6 +144,8 @@ public class Hrdinka
                 retezecVrat += "Doplinila jsi si životy: " + ukazZivoty();
                 //jeste odeber potion
                 odeberVec(neco.getNazev());
+                setChanged();
+                notifyObservers();
             }
         }else if(neco.vratUtocneCislo() == 0){
             //System.out.print("Klíč se použije automaticky při vchodu do prostoru.");
@@ -142,16 +154,16 @@ public class Hrdinka
             equipped.put(neco.getNazev(),neco);
             utocneCislo += neco.vratUtocneCislo();
             inventar.remove(neco);
+            setChanged();
+            notifyObservers();
         }else{
             inventar.putAll(equipped);
-            //snad je tam jen jeden prvek, mel by byt
-            for (String predmet : equipped.keySet()){
-                utocneCislo -= equipped.get(predmet).vratUtocneCislo();
-            }
             equipped.clear();
             equipped.put(neco.getNazev(),neco);
-            utocneCislo += neco.vratUtocneCislo();
+            utocneCislo = neco.vratUtocneCislo() + utocneCisloPuvodni;
             inventar.remove(neco);
+            setChanged();
+            notifyObservers();
         }
     	return retezecVrat;
     }
@@ -164,6 +176,17 @@ public class Hrdinka
      * @return Vec.
      */
     public Vec odeberEquip(String nazev){
+    	//fix -> při zahození zbraně z inventáře se snižovalo útočné číslo.
+    	if (vratEquipped().containsKey(nazev)) {
+    		utocneCislo = utocneCisloPuvodni;
+    	}else {
+    		for (Vec eqItem : equipped.values()){
+    			utocneCislo = utocneCisloPuvodni + eqItem.vratUtocneCislo();
+    		}
+    	}
+    	//fix end
+    	setChanged();
+        notifyObservers();
         return equipped.remove(nazev);
     }
     
